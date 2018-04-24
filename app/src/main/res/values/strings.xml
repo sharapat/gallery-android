@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">gallery-android</string>
+    <string name="app_name">Yandex Gallery</string>
+    <string name="todo">TODO</string>
 </resources>
