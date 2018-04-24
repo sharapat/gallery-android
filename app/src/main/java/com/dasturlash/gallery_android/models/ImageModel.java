@@ -3,6 +3,8 @@ package com.dasturlash.gallery_android.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by QAREKEN on 4/24/2018.
  */
@@ -49,6 +51,16 @@ public class ImageModel implements Parcelable {
         this.imageTitle = imageTitle;
     }
 
+    public static  ArrayList<ImageModel> getImageModels() {
+        ArrayList<ImageModel> imageModels = new ArrayList<>();
+        imageModels.add(new ImageModel("http://i.imgur.com/zuG2bGQ.jpg", "Galaxy"));
+        imageModels.add(new ImageModel("http://i.imgur.com/ovr0NAF.jpg", "Space Shuttle"));
+        imageModels.add(new ImageModel("http://i.imgur.com/n6RfJX2.jpg", "Galaxy Orion"));
+        imageModels.add(new ImageModel("http://i.imgur.com/qpr5LR2.jpg", "Earth"));
+        imageModels.add(new ImageModel("http://i.imgur.com/pSHXfu5.jpg", "Astronaut"));
+        imageModels.add(new ImageModel("http://i.imgur.com/3wQcZeY.jpg", "Satellite"));
+        return imageModels;
+    }
 
     @Override
     public int describeContents() {
