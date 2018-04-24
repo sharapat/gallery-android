@@ -5,5 +5,5 @@ package com.dasturlash.gallery_android.mainScreen;
  */
 
 public interface ImageGalleryListener {
-    void onImageClicked(int model);
+    void onImageClicked(int position);
 }
