@@ -13,9 +13,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.dasturlash.gallery_android.R;
-import com.dasturlash.gallery_android.models.PhotoModel;
+import com.dasturlash.gallery_android.models.Photo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by QAREKEN on 4/28/2018.
@@ -24,9 +24,9 @@ import java.util.ArrayList;
 class CustomPagerAdapter extends PagerAdapter {
 
     private Context context;
-    private ArrayList<PhotoModel> photoModels;
+    private List<Photo> photoModels;
 
-    CustomPagerAdapter(Context context, ArrayList<PhotoModel> photoModels) {
+    CustomPagerAdapter(Context context, List<Photo> photoModels) {
         this.context = context;
         this.photoModels = photoModels;
     }

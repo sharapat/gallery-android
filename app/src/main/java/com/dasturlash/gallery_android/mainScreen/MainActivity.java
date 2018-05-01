@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity implements GalleryListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getDate();
+        getData();
     }
 
-    public void getDate() {
+    public void getData() {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         call = apiInterface.func();
         call.enqueue(new Callback<PhotosModel>() {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener {
                     photoList = findViewById(R.id.list_photo);
                     photosModel = response.body();
                     assert photosModel != null;
-                    adapter = new GalleryAdapter(MainActivity.this, photosModel.getPhoto());
+                    adapter = new GalleryAdapter(MainActivity.this, photosModel.getPhotos().getPhoto());
                     manager = new GridLayoutManager(MainActivity.this, 2);
                     photoList.setAdapter(adapter);
                     photoList.setLayoutManager(manager);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener {
     @Override
     public void onImageClicked(int position) {
         Intent intent = new Intent(MainActivity.this, PhotoDetailActivity.class);
-        intent.putExtra(MainActivity.EXTRA_PHOTO_MODEL, photosModel.getPhoto());
+        intent.putParcelableArrayListExtra(MainActivity.EXTRA_PHOTO_MODEL, photosModel.getPhotos().getPhoto());
         intent.putExtra(MainActivity.EXTRA_CURRENT_ITEM, position);
         startActivity(intent);
     }

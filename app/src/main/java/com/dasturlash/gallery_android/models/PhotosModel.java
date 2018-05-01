@@ -3,23 +3,29 @@ package com.dasturlash.gallery_android.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
-/**
- * Created by QAREKEN on 5/1/2018.
- */
-
 public class PhotosModel {
 
-    @SerializedName("photo")
+    @SerializedName("photos")
     @Expose
-    private ArrayList<PhotoModel> photo = null;
+    private Photos photos;
+    @SerializedName("stat")
+    @Expose
+    private String stat;
 
-    public PhotosModel(ArrayList<PhotoModel> photo) {
-        this.photo = photo;
+    public Photos getPhotos() {
+        return photos;
     }
 
-    public ArrayList<PhotoModel> getPhoto() {
-        return photo;
+    public void setPhotos(Photos photos) {
+        this.photos = photos;
+    }
+
+    public String getStat() {
+        return stat;
+    }
+
+    public void setStat(String stat) {
+        this.stat = stat;
     }
 }
+
