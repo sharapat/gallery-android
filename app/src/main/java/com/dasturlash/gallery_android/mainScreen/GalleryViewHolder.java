@@ -6,23 +6,25 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dasturlash.gallery_android.R;
-import com.dasturlash.gallery_android.models.ImageModel;
+import com.dasturlash.gallery_android.models.PhotoModel;
+
+import java.util.ArrayList;
 
 /**
  * Created by QAREKEN on 4/24/2018.
  */
 
-class ImageGalleryViewHolder extends RecyclerView.ViewHolder {
+class GalleryViewHolder extends RecyclerView.ViewHolder {
     private ImageView photo;
 
-    ImageGalleryViewHolder(View itemView) {
+    GalleryViewHolder(View itemView) {
         super(itemView);
         photo = itemView.findViewById(R.id.item_image);
     }
 
-    void populateModel(final int position, final ImageGalleryListener listener, View view) {
+    void populateModel(ArrayList<PhotoModel> photoModels, final int position, final GalleryListener listener, View view) {
         Glide.with(view.getContext())
-                .load(ImageModel.getImageModels().get(position).getImageUrl())
+                .load(photoModels.get(position).getUrl())
                 .fitCenter()
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(photo);

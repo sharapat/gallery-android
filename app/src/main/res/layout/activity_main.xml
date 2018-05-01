@@ -6,7 +6,7 @@
     tools:context="com.dasturlash.gallery_android.mainScreen.MainActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_image"
+        android:id="@+id/list_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

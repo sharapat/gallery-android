@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dasturlash.gallery_android.R;
-import com.dasturlash.gallery_android.models.ImageModel;
+import com.dasturlash.gallery_android.models.PhotoModel;
 
 import java.util.ArrayList;
 
@@ -14,25 +14,25 @@ import java.util.ArrayList;
  * Created by QAREKEN on 4/24/2018.
  */
 
-public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryViewHolder> {
-    private ImageGalleryListener listener;
-    private ArrayList<ImageModel> models;
+public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
+    private GalleryListener listener;
+    private ArrayList<PhotoModel> models;
     private View view;
 
-    ImageGalleryAdapter(ImageGalleryListener listener, ArrayList<ImageModel> models) {
+    GalleryAdapter(GalleryListener listener, ArrayList<PhotoModel> models) {
         this.listener = listener;
         this.models = models;
     }
 
     @Override
-    public ImageGalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
-        return new ImageGalleryViewHolder(view);
+        return new GalleryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ImageGalleryViewHolder holder, int position) {
-            holder.populateModel(position, listener, view);
+    public void onBindViewHolder(GalleryViewHolder holder, int position) {
+            holder.populateModel(models, position, listener, view);
     }
 
     @Override
