@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.dasturlash.gallery_android.R;
 import com.dasturlash.gallery_android.imageDetails.PhotoDetailActivity;
-import com.dasturlash.gallery_android.models.PhotoModel;
 import com.dasturlash.gallery_android.models.PhotosModel;
 import com.dasturlash.gallery_android.retrofit.ApiClient;
 import com.dasturlash.gallery_android.retrofit.ApiInterface;

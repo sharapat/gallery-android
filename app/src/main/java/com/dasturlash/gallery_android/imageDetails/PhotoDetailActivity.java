@@ -11,7 +11,7 @@ import com.dasturlash.gallery_android.models.PhotoModel;
 import java.util.ArrayList;
 
 public class PhotoDetailActivity extends AppCompatActivity {
-    ArrayList<PhotoModel> photoModels;
+    private ArrayList<PhotoModel> photoModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

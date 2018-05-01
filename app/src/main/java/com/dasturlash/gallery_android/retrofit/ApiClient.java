@@ -10,10 +10,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by QAREKEN on 5/1/2018.
  */
 
-public class ApiClient {
+public final class ApiClient {
     private static Retrofit retrofit = null;
 
     private static Gson gson = null;
+
+    private ApiClient() {
+    }
+
     public static Retrofit getClient() {
         if (gson == null) {
             gson = new GsonBuilder()
@@ -21,9 +25,9 @@ public class ApiClient {
                     .create();
         }
         if (retrofit == null) {
-            String API_BASE_URL = "https://api.flickr.com/";
+            String apiBaseUrl = "https://api.flickr.com/";
             retrofit = new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
+                    .baseUrl(apiBaseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }

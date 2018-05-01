@@ -47,7 +47,8 @@ class CustomPagerAdapter extends PagerAdapter {
                     }
 
                     @Override
-                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
                         image.setImageBitmap(resource);
                         return false;
                     }

@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by QAREKEN on 4/24/2018.
  */
 
-public class PhotoModel implements Parcelable {
+public final class PhotoModel implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;

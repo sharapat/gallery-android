@@ -10,8 +10,8 @@ import retrofit2.http.GET;
  */
 
 public interface ApiInterface {
-    @GET("/services/rest/?method=flickr.interestingness.getList&"+
-            "api_key=5cd6479a3000bf6e31b0e320a1ae8fe5&date=&extras=url_o&per_page=20&"+
-            "page=1&format=json")
+    @GET("/services/rest/?method=flickr.interestingness.getList&"
+            + "api_key=5cd6479a3000bf6e31b0e320a1ae8fe5&date=&extras=url_o&per_page=20&"
+            + "page=1&format=json")
     Call<PhotosModel> func();
 }
