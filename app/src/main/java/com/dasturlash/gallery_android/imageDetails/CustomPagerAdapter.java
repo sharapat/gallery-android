@@ -13,7 +13,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.dasturlash.gallery_android.R;
-import com.dasturlash.gallery_android.models.ImageModel;
+import com.dasturlash.gallery_android.models.Photo;
+
+import java.util.List;
 
 /**
  * Created by QAREKEN on 4/28/2018.
@@ -22,9 +24,11 @@ import com.dasturlash.gallery_android.models.ImageModel;
 class CustomPagerAdapter extends PagerAdapter {
 
     private Context context;
+    private List<Photo> photoModels;
 
-    CustomPagerAdapter(Context context) {
+    CustomPagerAdapter(Context context, List<Photo> photoModels) {
         this.context = context;
+        this.photoModels = photoModels;
     }
 
     @Override
@@ -33,7 +37,7 @@ class CustomPagerAdapter extends PagerAdapter {
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_viewpager, container, false);
         final ImageView image = layout.findViewById(R.id.image);
         Glide.with(context)
-                .load(ImageModel.getImageModels().get(position).getImageUrl())
+                .load(photoModels.get(position).getUrl())
                 .asBitmap()
                 .error(R.drawable.ic_launcher_foreground)
                 .listener(new RequestListener<String, Bitmap>() {
@@ -43,7 +47,8 @@ class CustomPagerAdapter extends PagerAdapter {
                     }
 
                     @Override
-                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
                         image.setImageBitmap(resource);
                         return false;
                     }
@@ -61,7 +66,7 @@ class CustomPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return ImageModel.getImageModels().size();
+        return photoModels.size();
     }
 
     @Override
@@ -71,6 +76,6 @@ class CustomPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return ImageModel.getImageModels().get(position).getImageTitle();
+        return photoModels.get(position).getTitle();
     }
 }
