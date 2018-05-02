@@ -1,4 +1,4 @@
-package com.dasturlash.gallery_android.mainScreen;
+package com.dasturlash.gallery_android.mainscreen;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

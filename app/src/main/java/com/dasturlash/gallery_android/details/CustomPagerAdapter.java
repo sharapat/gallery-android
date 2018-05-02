@@ -1,4 +1,4 @@
-package com.dasturlash.gallery_android.imageDetails;
+package com.dasturlash.gallery_android.details;
 
 import android.content.Context;
 import android.graphics.Bitmap;

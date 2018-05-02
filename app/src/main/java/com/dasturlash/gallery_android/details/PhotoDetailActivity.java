@@ -1,4 +1,4 @@
-package com.dasturlash.gallery_android.imageDetails;
+package com.dasturlash.gallery_android.details;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.dasturlash.gallery_android.R;
-import com.dasturlash.gallery_android.mainScreen.MainActivity;
+import com.dasturlash.gallery_android.mainscreen.MainActivity;
 import com.dasturlash.gallery_android.models.Photo;
 
 import java.util.ArrayList;
