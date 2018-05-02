@@ -10,4 +10,5 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/todo"
         android:scaleType="centerCrop" />
+
 </android.support.constraint.ConstraintLayout>

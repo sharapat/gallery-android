@@ -24,48 +24,41 @@ public class MainActivity extends AppCompatActivity implements GalleryListener {
     public static final String EXTRA_CURRENT_ITEM = "CurrentItem";
     public static final String EXTRA_PHOTO_MODEL = "ExtraPhotoModel";
 
-    private ApiInterface apiInterface;
-    private Call<PhotosModel> call;
-    private PhotosModel photosModel;
-    private RecyclerView photoList;
     private GalleryAdapter adapter;
-    private RecyclerView.LayoutManager manager;
+    private PhotosModel photosModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RecyclerView.LayoutManager manager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             manager = new GridLayoutManager(MainActivity.this, 2);
         } else {
             manager = new GridLayoutManager(MainActivity.this, 1 + 2);
         }
-        photoList = findViewById(R.id.list_photo);
+        adapter = new GalleryAdapter(MainActivity.this);
+        RecyclerView photoList = findViewById(R.id.list_photo);
         photoList.setLayoutManager(manager);
+        photoList.setAdapter(adapter);
         photoList.setHasFixedSize(true);
         if (ResponseHolder.getInstance().getPhotosModel() == null) {
             getData();
         } else {
             photosModel = ResponseHolder.getInstance().getPhotosModel();
-            setAdapter();
         }
     }
 
-    private void setAdapter() {
-        adapter = new GalleryAdapter(MainActivity.this, photosModel.getPhotos().getPhoto());
-        photoList.setAdapter(adapter);
-    }
-
     public void getData() {
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        call = apiInterface.func();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<PhotosModel> call = apiInterface.func();
         call.enqueue(new Callback<PhotosModel>() {
             @Override
             public void onResponse(@NonNull Call<PhotosModel> call, @NonNull Response<PhotosModel> response) {
                 if (response.body() != null) {
                     photosModel = response.body();
                     ResponseHolder.getInstance().setPhotosModel(photosModel);
-                    setAdapter();
+                    adapter.updateModel(photosModel.getPhotos().getPhoto());
                 }
             }
 

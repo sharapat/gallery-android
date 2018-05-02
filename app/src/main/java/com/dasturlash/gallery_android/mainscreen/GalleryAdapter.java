@@ -1,5 +1,6 @@
 package com.dasturlash.gallery_android.mainscreen;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +20,23 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
     private List<Photo> models;
     private View view;
 
-    GalleryAdapter(GalleryListener listener, List<Photo> models) {
+    GalleryAdapter(GalleryListener listener) {
         this.listener = listener;
+    }
+
+    void updateModel(List<Photo> models) {
         this.models = models;
     }
 
+    @NonNull
     @Override
-    public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GalleryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
         return new GalleryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(GalleryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GalleryViewHolder holder, int position) {
             holder.populateModel(models, position, listener, view);
     }
 
