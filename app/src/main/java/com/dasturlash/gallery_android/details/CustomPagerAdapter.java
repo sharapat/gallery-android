@@ -1,7 +1,7 @@
-package com.dasturlash.gallery_android.imageDetails;
+package com.dasturlash.gallery_android.details;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +10,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.dasturlash.gallery_android.R;
 import com.dasturlash.gallery_android.models.Photo;
 
@@ -31,8 +29,9 @@ class CustomPagerAdapter extends PagerAdapter {
         this.photoModels = photoModels;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_viewpager, container, false);
         final ImageView image = layout.findViewById(R.id.image);
@@ -40,19 +39,6 @@ class CustomPagerAdapter extends PagerAdapter {
                 .load(photoModels.get(position).getUrl())
                 .asBitmap()
                 .error(R.drawable.ic_launcher_foreground)
-                .listener(new RequestListener<String, Bitmap>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target,
-                                                   boolean isFromMemoryCache, boolean isFirstResource) {
-                        image.setImageBitmap(resource);
-                        return false;
-                    }
-                })
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(image);
         container.addView(layout);
@@ -60,7 +46,7 @@ class CustomPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
     }
 
@@ -70,7 +56,7 @@ class CustomPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
