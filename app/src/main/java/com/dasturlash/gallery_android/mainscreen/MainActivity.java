@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener {
         return true;
     }
 
-    View.OnClickListener searchListener = new View.OnClickListener() {
+    private View.OnClickListener searchListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Toast.makeText(MainActivity.this, "search clicked", Toast.LENGTH_LONG).show();
