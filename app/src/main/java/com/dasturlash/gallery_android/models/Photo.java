@@ -1,12 +1,9 @@
 package com.dasturlash.gallery_android.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public final class Photo implements Parcelable {
+public final class Photo {
 
     @SerializedName("id")
     @Expose
@@ -44,26 +41,6 @@ public final class Photo implements Parcelable {
     @SerializedName("width_o")
     @Expose
     private String widthO;
-
-    private Photo(Parcel parcel) {
-        id = parcel.readString();
-        secret = parcel.readString();
-        server = parcel.readString();
-        title = parcel.readString();
-        farm = parcel.readInt();
-    }
-
-    public static final Parcelable.Creator<Photo> CREATOR = new Creator<Photo>() {
-        @Override
-        public Photo createFromParcel(Parcel parcel) {
-            return new Photo(parcel);
-        }
-
-        @Override
-        public Photo[] newArray(int i) {
-            return new Photo[i];
-        }
-    };
 
     public String getUrl() {
         String url = "https://farm" + farm + ".staticflickr.com/"
@@ -167,18 +144,5 @@ public final class Photo implements Parcelable {
         this.widthO = widthO;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(secret);
-        parcel.writeString(server);
-        parcel.writeString(title);
-        parcel.writeInt(farm);
-    }
 }
 
