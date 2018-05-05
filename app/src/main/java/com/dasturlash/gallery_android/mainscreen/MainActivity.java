@@ -4,13 +4,17 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.dasturlash.gallery_android.R;
 import com.dasturlash.gallery_android.ResponseHolder;
@@ -31,11 +35,21 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
     private GalleryPresenter galleryPresenter;
     private PhotosModel photosModel;
     private ApiInterface apiInterface;
+    private TextView resultNotFoundText;
+    private ProgressBar progressBar;
+    private RecyclerView photoList;
+    private String searchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        resultNotFoundText = findViewById(R.id.no_result);
+        resultNotFoundText.setVisibility(View.GONE);
+
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
 
         RecyclerView.LayoutManager manager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -47,9 +61,9 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         adapter = new GalleryAdapter(MainActivity.this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<PhotosModel> call = apiInterface.interesting();
-        galleryPresenter = new GalleryPresenter(this, call, photosModel);
+        galleryPresenter = new GalleryPresenter(this, call, photosModel, adapter);
 
-        RecyclerView photoList = findViewById(R.id.list_photo);
+        photoList = findViewById(R.id.list_photo);
         photoList.setLayoutManager(manager);
         photoList.setAdapter(adapter);
         photoList.setHasFixedSize(true);
@@ -81,8 +95,9 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
     private SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String s) {
+            searchText = s;
             Call<PhotosModel> call = apiInterface.search(s);
-            galleryPresenter = new GalleryPresenter(MainActivity.this, call, photosModel);
+            galleryPresenter = new GalleryPresenter(MainActivity.this, call, photosModel, adapter);
             galleryPresenter.getSearch();
             return false;
         }
@@ -101,8 +116,40 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
     }
 
     @Override
-    public void updateModel(PhotosModel model) {
-        ResponseHolder.getInstance().setPhotosModel(model);
-        adapter.updateModel(model.getPhotos().getPhoto());
+    public void resultNotFoundShow() {
+        resultNotFoundText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void resultNotFoundHide() {
+        resultNotFoundText.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void startProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void stopProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void listHide() {
+        photoList.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void listShow() {
+        photoList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setSearchForMessage() {
+        ActionBar actionBar = getSupportActionBar();
+        String message = getString(R.string.message, String.format("<b>%s</b>", searchText));
+        assert actionBar != null;
+        actionBar.setTitle(message);
     }
 }
