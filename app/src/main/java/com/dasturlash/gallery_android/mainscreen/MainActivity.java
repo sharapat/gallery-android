@@ -20,7 +20,6 @@ import com.dasturlash.gallery_android.ResponseHolder;
 import com.dasturlash.gallery_android.details.PhotoDetailActivity;
 import com.dasturlash.gallery_android.models.Photo;
 import com.dasturlash.gallery_android.models.PhotosModel;
-import com.dasturlash.gallery_android.models.SearchModel;
 import com.dasturlash.gallery_android.retrofit.ApiClient;
 import com.dasturlash.gallery_android.retrofit.ApiInterface;
 
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements GalleryListener {
 
     private GalleryAdapter adapter;
     private PhotosModel photosModel;
-    private SearchModel searchModel;
     private SearchView searchView;
 
     @Override
@@ -113,19 +111,19 @@ public class MainActivity extends AppCompatActivity implements GalleryListener {
 
     public void getSearch(String text) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<SearchModel> call = apiInterface.search(text);
-        call.enqueue(new Callback<SearchModel>() {
+        Call<PhotosModel> call = apiInterface.search(text);
+        call.enqueue(new Callback<PhotosModel>() {
             @Override
-            public void onResponse(@NonNull Call<SearchModel> call, @NonNull Response<SearchModel> response) {
+            public void onResponse(@NonNull Call<PhotosModel> call, @NonNull Response<PhotosModel> response) {
                 if (response.body() != null) {
-                    searchModel = response.body();
-                    assert searchModel != null;
-                    adapter.updateModel(searchModel.getPhotos().getPhoto());
+                    photosModel = response.body();
+                    ResponseHolder.getInstance().setPhotosModel(photosModel);
+                    adapter.updateModel(photosModel.getPhotos().getPhoto());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<SearchModel> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PhotosModel> call, @NonNull Throwable t) {
                 Log.d("Failure", t.getMessage());
             }
         });

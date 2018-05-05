@@ -1,7 +1,6 @@
 package com.dasturlash.gallery_android.retrofit;
 
 import com.dasturlash.gallery_android.models.PhotosModel;
-import com.dasturlash.gallery_android.models.SearchModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,5 +18,5 @@ public interface ApiInterface {
 
     @GET("/services/rest/?method=flickr.photos.search&api_key=5cd6479a3000bf6e31b0e320a1ae8fe5&"
             + "sort=interestingness-desc&per_page=100&format=json&nojsoncallback=1")
-    Call<SearchModel> search(@Query("text") String text);
+    Call<PhotosModel> search(@Query("text") String text);
 }
