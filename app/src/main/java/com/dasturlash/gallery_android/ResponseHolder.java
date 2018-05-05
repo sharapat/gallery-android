@@ -28,4 +28,5 @@ public final class ResponseHolder {
     public void setPhotosModel(PhotosModel photosModel) {
         this.photosModel = photosModel;
     }
+
 }
