@@ -6,12 +6,12 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dasturlash.gallery_android.R;
 import com.dasturlash.gallery_android.models.Photo;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ class CustomPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_viewpager, container, false);
-        final ImageView image = layout.findViewById(R.id.image);
+        final PhotoView image = layout.findViewById(R.id.image);
         Glide.with(context)
                 .load(photoModels.get(position).getUrl())
                 .asBitmap()

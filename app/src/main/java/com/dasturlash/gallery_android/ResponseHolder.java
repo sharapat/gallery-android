@@ -9,7 +9,7 @@ import com.dasturlash.gallery_android.models.PhotosModel;
 public final class ResponseHolder {
 
     private static ResponseHolder instance = null;
-    private PhotosModel photosModel = null;
+    private PhotosModel photosModel;
 
     private ResponseHolder() {
     }

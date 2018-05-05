@@ -26,6 +26,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
 
     void updateModel(List<Photo> models) {
         this.models = models;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,6 +43,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
 
     @Override
     public int getItemCount() {
-        return models.size();
+        return models == null ? 0 : models.size();
     }
 }

@@ -23,7 +23,7 @@ class GalleryViewHolder extends RecyclerView.ViewHolder {
         photo = itemView.findViewById(R.id.item_image);
     }
 
-    void populateModel(List<Photo> photoModels, final int position, final GalleryListener listener, View view) {
+    void populateModel(final List<Photo> photoModels, final int position, final GalleryListener listener, View view) {
         Glide.with(view.getContext())
                 .load(photoModels.get(position).getUrl())
                 .fitCenter()
@@ -35,7 +35,7 @@ class GalleryViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onImageClicked(position);
+                    listener.onImageClicked(photoModels, position);
                 }
             }
         });
