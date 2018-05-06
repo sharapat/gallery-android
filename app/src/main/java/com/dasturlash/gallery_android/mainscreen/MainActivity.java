@@ -65,8 +65,10 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         } else {
             photosModel = ResponseHolder.getInstance().getPhotosModel();
             adapter.updateModel(photosModel.getPhotos().getPhoto());
+            if (photosModel.getPhotos().getPhoto().isEmpty()) {
+                showResultNotFound();
+            }
         }
-
     }
 
     @Override
