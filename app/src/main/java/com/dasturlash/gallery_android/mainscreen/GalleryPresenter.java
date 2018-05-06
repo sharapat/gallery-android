@@ -47,7 +47,7 @@ class GalleryPresenter {
                     } else {
                         galleryView.showList();
                     }
-                    ResponseHolder.getInstance().setPhotosModel(photosModel);
+                    responseHolder.setPhotosModel(photosModel);
                     galleryView.updateAdapter(photosModel);
                 }
             }
@@ -77,7 +77,7 @@ class GalleryPresenter {
                         galleryView.showList();
                         galleryView.setSearchForMessage();
                     }
-                    ResponseHolder.getInstance().setPhotosModel(photosModel);
+                    responseHolder.setPhotosModel(photosModel);
                     galleryView.updateAdapter(photosModel);
                 }
             }
