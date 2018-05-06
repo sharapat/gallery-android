@@ -20,7 +20,6 @@ class GalleryPresenter {
     private Retrofit apiClient;
     private PhotosModel photosModel;
     private GalleryView galleryView;
-    private String searchText;
 
     GalleryPresenter(GalleryView galleryView, Retrofit apiClient,
                      PhotosModel photosModel) {
@@ -29,12 +28,8 @@ class GalleryPresenter {
         this.photosModel = photosModel;
     }
 
-    void setSearchText(String searchText) {
-        this.searchText = searchText;
-    }
-
     void getInterestings() {
-        galleryView.resultNotFoundHide();
+        galleryView.hideResultNotFound();
         galleryView.listHide();
         galleryView.startProgressBar();
         Call<PhotosModel> call = apiClient.create(ApiInterface.class).interesting();
@@ -46,7 +41,7 @@ class GalleryPresenter {
                     photosModel = response.body();
                     assert photosModel != null;
                     if (photosModel.getPhotos().getPhoto().isEmpty()) {
-                        galleryView.resultNotFoundShow();
+                        galleryView.showResultNotFound();
                     } else {
                         galleryView.listShow();
                     }
@@ -62,8 +57,8 @@ class GalleryPresenter {
         });
     }
 
-    void getSearch() {
-        galleryView.resultNotFoundHide();
+    void getSearch(String searchText) {
+        galleryView.hideResultNotFound();
         galleryView.listHide();
         galleryView.startProgressBar();
         Call<PhotosModel> call = apiClient.create(ApiInterface.class).search(searchText);
@@ -75,7 +70,7 @@ class GalleryPresenter {
                     photosModel = response.body();
                     assert photosModel != null;
                     if (photosModel.getPhotos().getPhoto().isEmpty()) {
-                        galleryView.resultNotFoundShow();
+                        galleryView.showResultNotFound();
                     } else {
                         galleryView.listShow();
                         galleryView.setSearchForMessage();

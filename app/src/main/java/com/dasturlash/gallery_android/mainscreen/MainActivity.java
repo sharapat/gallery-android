@@ -22,7 +22,6 @@ import com.dasturlash.gallery_android.details.PhotoDetailActivity;
 import com.dasturlash.gallery_android.models.Photo;
 import com.dasturlash.gallery_android.models.PhotosModel;
 import com.dasturlash.gallery_android.retrofit.ApiClient;
-import com.dasturlash.gallery_android.retrofit.ApiInterface;
 
 import java.util.List;
 
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
     private GalleryAdapter adapter;
     private GalleryPresenter galleryPresenter;
     private PhotosModel photosModel;
-    private ApiInterface apiInterface;
     private TextView resultNotFoundText;
     private ProgressBar progressBar;
     private RecyclerView photoList;
@@ -44,10 +42,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         setContentView(R.layout.activity_main);
 
         resultNotFoundText = findViewById(R.id.no_result);
-        resultNotFoundText.setVisibility(View.GONE);
-
         progressBar = findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.GONE);
 
         RecyclerView.LayoutManager manager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -93,8 +88,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         @Override
         public boolean onQueryTextSubmit(String s) {
             searchText = s;
-            galleryPresenter.setSearchText(s);
-            galleryPresenter.getSearch();
+            galleryPresenter.getSearch(s);
             return false;
         }
 
@@ -112,12 +106,12 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
     }
 
     @Override
-    public void resultNotFoundShow() {
+    public void showResultNotFound() {
         resultNotFoundText.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void resultNotFoundHide() {
+    public void hideResultNotFound() {
         resultNotFoundText.setVisibility(View.GONE);
     }
 

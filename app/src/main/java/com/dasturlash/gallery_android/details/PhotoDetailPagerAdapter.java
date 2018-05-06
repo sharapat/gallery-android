@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dasturlash.gallery_android.R;
-import com.dasturlash.gallery_android.ResponseHolder;
 import com.dasturlash.gallery_android.models.Photo;
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -28,7 +27,11 @@ class PhotoDetailPagerAdapter extends PagerAdapter {
 
     PhotoDetailPagerAdapter(Context context) {
         this.context = context;
-        this.photoModels = ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto();
+    }
+
+    void updateModel(ArrayList<Photo> photoModels) {
+        this.photoModels = photoModels;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -55,7 +58,7 @@ class PhotoDetailPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return photoModels.size();
+        return photoModels == null ? 0 : photoModels.size();
     }
 
     @Override

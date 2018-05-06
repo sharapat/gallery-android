@@ -7,8 +7,8 @@ import com.dasturlash.gallery_android.models.PhotosModel;
  */
 
 public interface GalleryView {
-    void resultNotFoundShow();
-    void resultNotFoundHide();
+    void showResultNotFound();
+    void hideResultNotFound();
     void startProgressBar();
     void stopProgressBar();
     void listHide();
