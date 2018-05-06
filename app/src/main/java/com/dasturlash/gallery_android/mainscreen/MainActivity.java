@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
 
         adapter = new GalleryAdapter(MainActivity.this);
 
-        galleryPresenter = new GalleryPresenter(this, ApiClient.getClient(), photosModel);
+        galleryPresenter = new GalleryPresenter(this, ApiClient.getClient(), photosModel, ResponseHolder.getInstance());
 
         photoList = findViewById(R.id.list_photo);
         photoList.setLayoutManager(manager);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         photoList.setHasFixedSize(true);
 
         if (ResponseHolder.getInstance().getPhotosModel() == null) {
-            galleryPresenter.getInterestings();
+            galleryPresenter.getPopularPhotos();
         } else {
             photosModel = ResponseHolder.getInstance().getPhotosModel();
             adapter.updateModel(photosModel.getPhotos().getPhoto());
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         @Override
         public boolean onQueryTextSubmit(String s) {
             searchText = s;
-            galleryPresenter.getSearch(s);
+            galleryPresenter.searchPhotos(s);
             return false;
         }
 
@@ -126,12 +126,12 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
     }
 
     @Override
-    public void listHide() {
+    public void hideList() {
         photoList.setVisibility(View.GONE);
     }
 
     @Override
-    public void listShow() {
+    public void showList() {
         photoList.setVisibility(View.VISIBLE);
     }
 

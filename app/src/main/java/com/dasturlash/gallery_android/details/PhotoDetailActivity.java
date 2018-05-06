@@ -18,17 +18,13 @@ public class PhotoDetailActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.viewpager);
 
         int currentItem = getIntent().getIntExtra(MainActivity.EXTRA_CURRENT_ITEM, 0);
-        getSupportActionBar().setTitle(ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto().get(currentItem).getTitle());
+        setActionBarText(ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto().get(currentItem).getTitle());
 
         ViewPager.SimpleOnPageChangeListener pageListener = new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                ActionBar actionBar = PhotoDetailActivity.this.getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setTitle(ResponseHolder.getInstance().getPhotosModel().getPhotos()
-                            .getPhoto().get(position).getTitle());
-                }
+                setActionBarText(ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto().get(position).getTitle());
             }
         };
         PhotoDetailPagerAdapter adapter = new PhotoDetailPagerAdapter(this);
@@ -37,5 +33,12 @@ public class PhotoDetailActivity extends AppCompatActivity {
         adapter.updateModel(ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto());
         viewPager.setOnPageChangeListener(pageListener);
         viewPager.setCurrentItem(currentItem);
+    }
+
+    private void setActionBarText(String text) {
+        ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(text);
+        }
     }
 }

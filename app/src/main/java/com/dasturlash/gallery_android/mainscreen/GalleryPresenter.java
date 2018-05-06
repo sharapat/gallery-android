@@ -20,17 +20,19 @@ class GalleryPresenter {
     private Retrofit apiClient;
     private PhotosModel photosModel;
     private GalleryView galleryView;
+    private ResponseHolder responseHolder;
 
     GalleryPresenter(GalleryView galleryView, Retrofit apiClient,
-                     PhotosModel photosModel) {
+                     PhotosModel photosModel, ResponseHolder responseHolder) {
         this.galleryView = galleryView;
         this.apiClient = apiClient;
         this.photosModel = photosModel;
+        this.responseHolder = responseHolder;
     }
 
-    void getInterestings() {
+    void getPopularPhotos() {
         galleryView.hideResultNotFound();
-        galleryView.listHide();
+        galleryView.hideList();
         galleryView.startProgressBar();
         Call<PhotosModel> call = apiClient.create(ApiInterface.class).interesting();
         call.enqueue(new Callback<PhotosModel>() {
@@ -43,7 +45,7 @@ class GalleryPresenter {
                     if (photosModel.getPhotos().getPhoto().isEmpty()) {
                         galleryView.showResultNotFound();
                     } else {
-                        galleryView.listShow();
+                        galleryView.showList();
                     }
                     ResponseHolder.getInstance().setPhotosModel(photosModel);
                     galleryView.updateAdapter(photosModel);
@@ -57,9 +59,9 @@ class GalleryPresenter {
         });
     }
 
-    void getSearch(String searchText) {
+    void searchPhotos(String searchText) {
         galleryView.hideResultNotFound();
-        galleryView.listHide();
+        galleryView.hideList();
         galleryView.startProgressBar();
         Call<PhotosModel> call = apiClient.create(ApiInterface.class).search(searchText);
         call.enqueue(new Callback<PhotosModel>() {
@@ -72,7 +74,7 @@ class GalleryPresenter {
                     if (photosModel.getPhotos().getPhoto().isEmpty()) {
                         galleryView.showResultNotFound();
                     } else {
-                        galleryView.listShow();
+                        galleryView.showList();
                         galleryView.setSearchForMessage();
                     }
                     ResponseHolder.getInstance().setPhotosModel(photosModel);

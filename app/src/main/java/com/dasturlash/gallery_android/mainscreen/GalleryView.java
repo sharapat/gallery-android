@@ -11,8 +11,8 @@ public interface GalleryView {
     void hideResultNotFound();
     void startProgressBar();
     void stopProgressBar();
-    void listHide();
-    void listShow();
+    void hideList();
+    void showList();
     void setSearchForMessage();
     void updateAdapter(PhotosModel photosModel);
 }
