@@ -26,8 +26,6 @@ import com.dasturlash.gallery_android.retrofit.ApiInterface;
 
 import java.util.List;
 
-import retrofit2.Call;
-
 public class MainActivity extends AppCompatActivity implements GalleryListener, GalleryView {
     public static final String EXTRA_CURRENT_ITEM = "CurrentItem";
 
@@ -59,9 +57,8 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         }
 
         adapter = new GalleryAdapter(MainActivity.this);
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<PhotosModel> call = apiInterface.interesting();
-        galleryPresenter = new GalleryPresenter(this, call, photosModel, adapter);
+
+        galleryPresenter = new GalleryPresenter(this, ApiClient.getClient(), photosModel);
 
         photoList = findViewById(R.id.list_photo);
         photoList.setLayoutManager(manager);
@@ -96,8 +93,7 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
         @Override
         public boolean onQueryTextSubmit(String s) {
             searchText = s;
-            Call<PhotosModel> call = apiInterface.search(s);
-            galleryPresenter = new GalleryPresenter(MainActivity.this, call, photosModel, adapter);
+            galleryPresenter.setSearchText(s);
             galleryPresenter.getSearch();
             return false;
         }
@@ -148,8 +144,13 @@ public class MainActivity extends AppCompatActivity implements GalleryListener, 
     @Override
     public void setSearchForMessage() {
         ActionBar actionBar = getSupportActionBar();
-        String message = getString(R.string.message, String.format("<b>%s</b>", searchText));
+        String message = getString(R.string.message, searchText);
         assert actionBar != null;
         actionBar.setTitle(message);
+    }
+
+    @Override
+    public void updateAdapter(PhotosModel photosModel) {
+        adapter.updateModel(photosModel.getPhotos().getPhoto());
     }
 }

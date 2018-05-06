@@ -5,33 +5,39 @@ import android.util.Log;
 
 import com.dasturlash.gallery_android.ResponseHolder;
 import com.dasturlash.gallery_android.models.PhotosModel;
+import com.dasturlash.gallery_android.retrofit.ApiInterface;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by QAREKEN on 5/5/2018.
  */
 
 class GalleryPresenter {
-    private Call<PhotosModel> call;
+    private Retrofit apiClient;
     private PhotosModel photosModel;
     private GalleryView galleryView;
-    private GalleryAdapter adapter;
+    private String searchText;
 
-    GalleryPresenter(GalleryView galleryView, Call<PhotosModel> call,
-                     PhotosModel photosModel, GalleryAdapter adapter) {
+    GalleryPresenter(GalleryView galleryView, Retrofit apiClient,
+                     PhotosModel photosModel) {
         this.galleryView = galleryView;
-        this.call = call;
+        this.apiClient = apiClient;
         this.photosModel = photosModel;
-        this.adapter = adapter;
+    }
+
+    void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 
     void getInterestings() {
         galleryView.resultNotFoundHide();
         galleryView.listHide();
         galleryView.startProgressBar();
+        Call<PhotosModel> call = apiClient.create(ApiInterface.class).interesting();
         call.enqueue(new Callback<PhotosModel>() {
             @Override
             public void onResponse(@NonNull Call<PhotosModel> call, @NonNull Response<PhotosModel> response) {
@@ -45,7 +51,7 @@ class GalleryPresenter {
                         galleryView.listShow();
                     }
                     ResponseHolder.getInstance().setPhotosModel(photosModel);
-                    adapter.updateModel(photosModel.getPhotos().getPhoto());
+                    galleryView.updateAdapter(photosModel);
                 }
             }
 
@@ -60,6 +66,7 @@ class GalleryPresenter {
         galleryView.resultNotFoundHide();
         galleryView.listHide();
         galleryView.startProgressBar();
+        Call<PhotosModel> call = apiClient.create(ApiInterface.class).search(searchText);
         call.enqueue(new Callback<PhotosModel>() {
             @Override
             public void onResponse(@NonNull Call<PhotosModel> call, @NonNull Response<PhotosModel> response) {
@@ -74,7 +81,7 @@ class GalleryPresenter {
                         galleryView.setSearchForMessage();
                     }
                     ResponseHolder.getInstance().setPhotosModel(photosModel);
-                    adapter.updateModel(photosModel.getPhotos().getPhoto());
+                    galleryView.updateAdapter(photosModel);
                 }
             }
 

@@ -3,7 +3,7 @@ package com.dasturlash.gallery_android.details;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +37,7 @@ class PhotoDetailPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_viewpager, container, false);
         final PhotoView image = layout.findViewById(R.id.image);
-        ((AppCompatActivity) context).getSupportActionBar().setTitle(photoModels.get(position).getTitle());
+        Log.d("itemIndex", position + "");
         Glide.with(context)
                 .load(photoModels.get(position).getUrl())
                 .asBitmap()
@@ -67,4 +67,5 @@ class PhotoDetailPagerAdapter extends PagerAdapter {
     public CharSequence getPageTitle(int position) {
         return photoModels.get(position).getTitle();
     }
+
 }
