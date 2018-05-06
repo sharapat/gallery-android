@@ -1,27 +1,44 @@
 package com.dasturlash.gallery_android.details;
 
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.dasturlash.gallery_android.R;
+import com.dasturlash.gallery_android.ResponseHolder;
 import com.dasturlash.gallery_android.mainscreen.MainActivity;
-import com.dasturlash.gallery_android.models.Photo;
-
-import java.util.ArrayList;
 
 public class PhotoDetailActivity extends AppCompatActivity {
-    private ArrayList<Photo> photoModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
-        photoModels = getIntent().getParcelableArrayListExtra(MainActivity.EXTRA_PHOTO_MODEL);
-        Log.d("model size", String.valueOf(photoModels.size()));
         ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new CustomPagerAdapter(this, photoModels));
-        viewPager.setCurrentItem(getIntent().getIntExtra(MainActivity.EXTRA_CURRENT_ITEM, 0));
+
+        int currentItem = getIntent().getIntExtra(MainActivity.EXTRA_CURRENT_ITEM, 0);
+        setActionBarText(ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto().get(currentItem).getTitle());
+
+        ViewPager.SimpleOnPageChangeListener pageListener = new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setActionBarText(ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto().get(position).getTitle());
+            }
+        };
+        PhotoDetailPagerAdapter adapter = new PhotoDetailPagerAdapter(this);
+
+        viewPager.setAdapter(adapter);
+        adapter.updateModel(ResponseHolder.getInstance().getPhotosModel().getPhotos().getPhoto());
+        viewPager.setOnPageChangeListener(pageListener);
+        viewPager.setCurrentItem(currentItem);
+    }
+
+    private void setActionBarText(String text) {
+        ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(text);
+        }
     }
 }

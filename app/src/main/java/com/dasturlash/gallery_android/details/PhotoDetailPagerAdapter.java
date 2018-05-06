@@ -3,6 +3,7 @@ package com.dasturlash.gallery_android.details;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +14,24 @@ import com.dasturlash.gallery_android.R;
 import com.dasturlash.gallery_android.models.Photo;
 import com.github.chrisbanes.photoview.PhotoView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by QAREKEN on 4/28/2018.
  */
 
-class CustomPagerAdapter extends PagerAdapter {
+class PhotoDetailPagerAdapter extends PagerAdapter {
 
     private Context context;
-    private List<Photo> photoModels;
+    private ArrayList<Photo> photoModels;
 
-    CustomPagerAdapter(Context context, List<Photo> photoModels) {
+    PhotoDetailPagerAdapter(Context context) {
         this.context = context;
+    }
+
+    void updateModel(ArrayList<Photo> photoModels) {
         this.photoModels = photoModels;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -35,6 +40,7 @@ class CustomPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_viewpager, container, false);
         final PhotoView image = layout.findViewById(R.id.image);
+        Log.d("itemIndex", position + "");
         Glide.with(context)
                 .load(photoModels.get(position).getUrl())
                 .asBitmap()
@@ -52,7 +58,7 @@ class CustomPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return photoModels.size();
+        return photoModels == null ? 0 : photoModels.size();
     }
 
     @Override
@@ -64,4 +70,5 @@ class CustomPagerAdapter extends PagerAdapter {
     public CharSequence getPageTitle(int position) {
         return photoModels.get(position).getTitle();
     }
+
 }
